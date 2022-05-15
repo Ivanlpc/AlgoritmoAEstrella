@@ -20,28 +20,19 @@ public A () {
 }
 
 public List<Nodo> buscar() {
-	nodosAbiertos.add(nodoInicial);
-
+	nodosAbiertos.add(nodoInicial); //Agrega el nodo inicial a la lista de nodos abiertos
 	while(!nodosAbiertos.isEmpty()) {
-		
 	Nodo analizar=menorF();	
 	if(analizar.equals(nodoFinal)) {	
 		System.out.println("FINAL DEL ALGORITMO");
 		Nodo padre=analizar.getPadre();
-		
 		caminito.add(analizar);
 		do {
-			
-			padre.setSymbol('+');
-			//System.out.println("G: "+padre.getG()+" H: "+padre.getH()+" el padre es G: "+padre.getPadre().getG()+" H: "+padre.getPadre().getH());
-			//System.out.println("Nodo inicial: "+nodoInicial.toString()+" nodo Final: "+nodoFinal.toString());
-			caminito.add(padre);
-			//System.out.println("Xd");
-			padre=padre.getPadre();
-		}while(!padre.equals(nodoInicial));
+			padre.setSymbol('+'); //Le establece el simbolo de la suma a cada nodo del camino
+			caminito.add(padre); 
+			padre=padre.getPadre(); //Hace el camino a la inversa, empieza desde el nodo final y accede al padre de ese nodo hasta llegar al inicial y lo va guardando en un ArrayList
+		}while(!padre.equals(nodoInicial)); //Mientras no haya llegado al nodo inicial, sigue buscando el padre de cada nodo hasta llegar
 		return caminito;
-				
-		
 	}
 	nodosAbiertos.remove(analizar);
 	nodosCerrados.add(analizar);
@@ -65,15 +56,13 @@ public List<Nodo> buscar() {
 	}
 	return caminito;
 }
-public int distEntreNodos(Nodo n1, Nodo n2) {
-	return  Math.abs(n1.getX()-n2.getX())+Math.abs(n1.getY()-n2.getY());
-}
+
 public Laberinto actualizarMatriz(Laberinto lb){
-	Nodo[][] laberinto=lb.getMatriz();
-	laberinto[nodoInicial.getX()][nodoInicial.getY()].setSymbol('I');
+	Nodo[][] laberinto=lb.getMatriz(); //Guarda en un objeto el laberinto generado al principio
+	laberinto[nodoInicial.getX()][nodoInicial.getY()].setSymbol('I'); //Al guardar el camino y establecerle el s铆mbolo +, se ha sobreescrito el s铆mbolo de los nodos inicial y final
 	laberinto[nodoFinal.getX()][nodoFinal.getY()].setSymbol('O');
-	for(Nodo n: nodosExplorados) {
-		laberinto[n.getX()][n.getY()]=n;
+	for(Nodo n: nodosExplorados) { 
+		laberinto[n.getX()][n.getY()]=n; //Actualiza el laberinto con los nuevos nodos que contienen el camino
 	}
 	return new Laberinto(laberinto);
 		
@@ -83,7 +72,7 @@ int fila=n.getY();
 int columna=n.getX();
 //System.out.println("Vecinos de "+fila+" "+columna);
 List<Nodo> lista = new ArrayList<>();
-//Posici髇 abajo
+//Posici贸n abajo
 if(fila+1<=79 && !lb.esObstaculo(fila+1, columna)) {
 	Nodo vecino=lb.getNodo(fila+1, columna);
 	//vecino.setPadre(n);
@@ -92,7 +81,7 @@ if(fila+1<=79 && !lb.esObstaculo(fila+1, columna)) {
 	lista.add(vecino);
 	//System.out.println("X:"+vecino.getX()+" Y:"+vecino.getY());
 }
-//Posici髇 arriba
+//Posici贸n arriba
 if(fila-1>=0 && !lb.esObstaculo(fila-1, columna)) {
 	Nodo vecino=lb.getNodo(fila-1, columna);
 	vecino.setG(n.getG()+1);
@@ -101,7 +90,7 @@ if(fila-1>=0 && !lb.esObstaculo(fila-1, columna)) {
 	lista.add(vecino);
 	//System.out.println("X:"+vecino.getX()+" Y:"+vecino.getY());
 }
-//Posici髇 derecha
+//Posici贸n derecha
 if(columna+1<=59 && !lb.esObstaculo(fila, columna+1)) {
 	Nodo vecino=lb.getNodo(fila, columna+1);
 	vecino.setG(n.getG()+1);
@@ -110,7 +99,7 @@ if(columna+1<=59 && !lb.esObstaculo(fila, columna+1)) {
 	lista.add(vecino);
 	//System.out.println("X:"+vecino.getX()+" Y:"+vecino.getY());
 }
-//Posici髇 izquierda
+//Posici贸n izquierda
 if(columna-1>=0 && !lb.esObstaculo(fila, columna-1)) {
 	Nodo vecino=lb.getNodo(fila+1, columna-1);
 	vecino.setG(n.getG()+1);
@@ -124,15 +113,14 @@ return lista;
 }
 public Nodo menorF() { 
 	int f;
-	Nodo respuesta=nodosAbiertos.iterator().next();
-	int aux=respuesta.getG()+respuesta.getH();
-	
-	for(Nodo n : nodosAbiertos) {
+	Nodo respuesta=nodosAbiertos.iterator().next(); //Coge el primer nodo de la lista de nodos abiertos
+	int aux=respuesta.getG()+respuesta.getH(); //Calcula la F del primer nodo de la lista anterior
+	for(Nodo n : nodosAbiertos) { //Eval煤a cada nodo de la lista de nodos Abiertos
 		
-		f=n.getG()+n.getH();
-		if(f<aux) {
+		f=n.getG()+n.getH(); 
+		if(f<aux) { //Si encuentra una F inferior a la del nodo anteriormente evaluado la guarda en la variable aux y sigue comparando
 			aux=f;
-			respuesta=n;
+			respuesta=n; //guarda el nodo con menor f encontrada
 		}
 		
 	}
@@ -141,8 +129,8 @@ public Nodo menorF() {
 }
 @Override
 public String toString() {
-	Laberinto matriz=actualizarMatriz(lb);
+	Laberinto matriz=actualizarMatriz(lb); 
 	
-	return matriz.toString();
+	return matriz.toString(); //Objeto laberinto toString();
 }
 }
