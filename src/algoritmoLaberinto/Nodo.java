@@ -90,6 +90,7 @@ public boolean equals(Object obj) {
 			
 	return true;
 }
+@Override
 public String toString() {
 	return "X: "+this.x+" Y:"+this.y;
 }
