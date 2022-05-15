@@ -5,18 +5,17 @@ package algoritmoLaberinto;
 public class Nodo{
 private int h=0;
 private int g;
-private char symbol=' ';
+private char symbol=' '; //Por defecto el símbolo es un espacio
 private int x=0;
 private int y=0;
-private Nodo padre;
+private Nodo padre; //Variable que guarda cuál es el padre de este nodo
 public Nodo(int x, int y) {
 	this.x=x;
 	this.y=y;
-	
 }
 public Nodo() { //Estado inicial
-	this.y=(int)(Math.random()*80-1);
-	this.x=(int)(Math.random()*60-1);
+	this.y=(int)(Math.random()*Main.columnas-1);
+	this.x=(int)(Math.random()*Main.filas-1);
 	System.out.println("Nodo inicial establecido en X: "+x+" Y: "+y);
 }
 public Nodo(Nodo n) { //Estado final
@@ -26,7 +25,7 @@ public Nodo(Nodo n) { //Estado final
 		}while(this.x==n.getX() && this.y==n.getY());
 	System.out.println("Nodo final establecido en X: "+x+" Y: "+y);
 }
-public int calcularH(Nodo n1) {
+public int calcularH(Nodo n1) { //Valor absoluto de la distancia entre el nodo y el nodo final
 	return Math.abs(n1.getX()-this.x)+Math.abs(n1.getY()-this.y);
 
 }
@@ -90,7 +89,6 @@ public boolean equals(Object obj) {
 			
 	return true;
 }
-@Override
 public String toString() {
 	return "X: "+this.x+" Y:"+this.y;
 }
