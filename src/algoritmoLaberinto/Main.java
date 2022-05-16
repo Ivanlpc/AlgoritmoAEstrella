@@ -6,8 +6,8 @@ import java.io.IOException;
 
 
 public class Main {
-	public int filas=60;
-	public int columnas=80;
+	public static final int filas=60;
+	public static final int columnas=80;
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		A algoritmo=new A();
@@ -20,7 +20,7 @@ public class Main {
 		        System.out.println("El archivo ya existe.");
 		      }
 		    } catch (IOException e) {
-		      System.out.println("Ocurrió un error.");
+		      System.out.println("OcurriÃ³ un error.");
 		      e.printStackTrace();
 		    }
 		try {
@@ -30,7 +30,7 @@ public class Main {
 		      salida.close();
 		      System.out.println("Se ha escrito la salida en el archivo salida.txt.");
 		    } catch (IOException e) {
-		      System.out.println("Ocurrió un error.");
+		      System.out.println("OcurriÃ³ un error.");
 		      e.printStackTrace();
 		    }
 
